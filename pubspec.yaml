@@ -70,7 +70,7 @@ flutter:
   fonts:
     - family: SpotifyFont
       fonts:
-        - asset: fonts/GothamBook.ttf
+        - asset: assests\fonts\GothamBook.ttf
 
   #   - family: Schyler
   #     fonts:

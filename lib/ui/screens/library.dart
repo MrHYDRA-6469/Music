@@ -14,7 +14,9 @@ class Library extends StatelessWidget {
             FutureBuilder<Albums>(
               future: getAlbum(),
               builder: (context, snapshot) {
-                return Text('${snapshot.data.albums}');
+                return snapshot.data.albums != null
+                    ? Text('has data')
+                    : Text('got null');
               },
             ),
           ],
