@@ -4,18 +4,20 @@ import 'package:music_for_everone/models/albums/albums.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'package:music_for_everone/utilities/key.dart';
+// import 'package:oauth2/oauth2.dart';
 
-String url =
-    'https://api.spotify.com/v1/artists/45PG2L6Fh2XvYL4ONzpdoW/top-tracks?country=in';
+String url = '	https://api.spotify.com/v1/browse/new-releases';
 
-Future<Albums> getAlbum() async {
+Future<Albums> fetchAlbum() async {
   final response = await http.get(
     url,
-    headers: {HttpHeaders.authorizationHeader: API_KEY},
+    // headers: {HttpHeaders.authorizationHeader: API_KEY},
   );
-  final responseJson = json.decode(response.body);
-
-  return Albums.fromJson(responseJson);
+  if (response.statusCode == 200) {
+    return Albums.fromJson(json.decode(response.body));
+  } else {
+    throw Exception('Failed to load album');
+  }
 }
 // class APIService {
 //   APIService._instantiate();
