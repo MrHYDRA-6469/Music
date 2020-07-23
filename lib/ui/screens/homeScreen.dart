@@ -56,19 +56,35 @@ class _HomeScreenState extends State<HomeScreen> {
               items: [
                 new BottomNavigationBarItem(
                   icon: Icon(Icons.home),
-                  title: Text('Home'),
+                  title: Text(
+                    'Home',
+                    style: TextStyle(
+                        color: Colors.white, fontFamily: 'SpotifyFont'),
+                  ),
                 ),
                 new BottomNavigationBarItem(
                   icon: Icon(Icons.search),
-                  title: Text('Search'),
+                  title: Text(
+                    'Search',
+                    style: TextStyle(
+                        color: Colors.white, fontFamily: 'SpotifyFont'),
+                  ),
                 ),
                 new BottomNavigationBarItem(
                   icon: Icon(Icons.library_music),
-                  title: Text('Your Library'),
+                  title: Text(
+                    'Your Library',
+                    style: TextStyle(
+                        color: Colors.white, fontFamily: 'SpotifyFont'),
+                  ),
                 ),
                 new BottomNavigationBarItem(
                   icon: Icon(FontAwesomeIcons.spotify),
-                  title: Text('Premium'),
+                  title: Text(
+                    'Premium',
+                    style: TextStyle(
+                        color: Colors.white, fontFamily: 'SpotifyFont'),
+                  ),
                 ),
               ])),
     );
