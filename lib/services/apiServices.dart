@@ -6,7 +6,7 @@ import 'dart:convert';
 import 'package:music_for_everone/utilities/key.dart';
 // import 'package:oauth2/oauth2.dart';
 
-String url = '	https://api.spotify.com/v1/browse/new-releases';
+String url = 'https://api.spotify.com/v1/browse/new-releases';
 
 Future<Albums> fetchAlbum() async {
   Map<String, String> parameters = {
@@ -15,9 +15,9 @@ Future<Albums> fetchAlbum() async {
     'offset': null,
   };
   Map<String, String> headers = {
-    HttpHeaders.contentTypeHeader: 'application/json',
-    HttpHeaders.authorizationHeader:
-        "BQBX4UufRxqBeWa6PoGPS_IGtyuhELsPhaMrIwfxG1B0aRNzA7iCvMskgKKNuElZ-q3BvqJsZliygKnxNvFQ7w8WUDfkKhwMNp6d0Fga6zgqkJGnP3gknkbfpKDEYK1P7hFeAD1liWNsWi0W-2Qpe0vBFZjlWh9BCXLH-DrY9O74-JgwFm6_SgYxuH8r-xnLfDBqWHn1XVfbnf9Taa14ANNngyNgJZBKiKxDDnCVGS1P9xtkEg25_sPq4c8lHy7JQCzL1Yhm1d8c2u7sVJoPPnU_LW4LuTuiYmym",
+    // HttpHeaders.contentTypeHeader: 'application/json',
+    HttpHeaders.authorizationHeader: 'Bearer ' +
+        "BQD2ce30fH1Sa4oFwWKqewgyd_TF8_FcjsmhSaaHTBSX7gdY9yus1IKQzQRz3ZqqNwLgkb00tDu0e6bbHDeYxSiORVNuj7ITTbWhYAaIYxqtRw2g8hlcO1WDsFVfYddNF59RskprComuPLse6MNug27r0BxCIlcSfVG2fbyTsCp8cNs1FrH-gej-Qdm70NrERwmQV1p6DatUs3MS-TU0l4baE6wn6ocCLrEbKe8dcWY9iR4SjxzbPR61KQ9khPsuDGa8G4XsX28UyBnsMNkUaqiojy3XjuqojS5Q",
   };
   final response = await http.get(
     url,
