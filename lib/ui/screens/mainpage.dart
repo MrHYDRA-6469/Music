@@ -1,6 +1,43 @@
 import 'package:flutter/material.dart';
 
-class MainPage extends StatelessWidget {
+import '../../models/albums/albums.dart';
+import '../../models/albums/albums.dart';
+import '../../services/apiServices.dart';
+import '../../services/apiServices.dart';
+
+class MainPage extends StatefulWidget {
+  @override
+  _MainPageState createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  Widget projectWidget() {
+    return FutureBuilder(
+      future: fetchAlbum(),
+      builder: (context, projectSnap) {
+        if (projectSnap.connectionState == ConnectionState.none &&
+            projectSnap.hasData == null) {
+          //print('project snapshot data is: ${projectSnap.data}');
+          return Container();
+        }
+        return ListView.builder(
+          itemCount: projectSnap.data,
+          itemBuilder: (context, index) {
+            Albums project = projectSnap.data[index];
+            return Column(
+              children: <Widget>[
+                Image(
+                    image: NetworkImage(project.albums.items[6].images[2].url))
+                // Widget to display the list of project
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -35,34 +72,7 @@ class MainPage extends StatelessWidget {
                         padding: EdgeInsets.all(10.0),
                       ),
                       Container(
-                        height: 165.0,
-                        child: ListView.builder(
-                          itemCount: 10,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Column(
-                              children: <Widget>[
-                                SizedBox(
-                                  height: 130.0,
-                                  width: 140.0,
-                                  child: Image.asset(
-                                    '',
-                                    fit: BoxFit.fitHeight,
-                                  ),
-                                ),
-                                Padding(padding: EdgeInsets.all(5.0)),
-                                Text(
-                                  '..........',
-                                  style: TextStyle(
-                                    color: Colors.white.withOpacity(1.0),
-                                    fontFamily: 'SpotifyFont',
-                                    fontSize: 10.0,
-                                  ),
-                                )
-                              ],
-                            );
-                          },
-                        ),
+                        child: projectWidget(),
                       ),
                     ],
                   ),
@@ -86,6 +96,23 @@ class MainPage extends StatelessWidget {
                           '',
                           fit: BoxFit.fill,
                         ),
+                      ),
+                      FutureBuilder<Albums>(
+                        future: fetchAlbum(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return Expanded(
+                              child: Image(
+                                  image: NetworkImage(snapshot
+                                      .data.albums.items[6].images[1].url)),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Text("${snapshot.error}");
+                          }
+
+                          // By default, show a loading spinner.
+                          return CircularProgressIndicator();
+                        },
                       ),
                       Text(
                         'Songs you loved most this year,\nall wrapped up',
@@ -128,3 +155,32 @@ class MainPage extends StatelessWidget {
     );
   }
 }
+
+// height: 165.0,
+//                         child: ListView.builder(
+//                           itemCount: 10,
+//                           scrollDirection: Axis.horizontal,
+//                           itemBuilder: (BuildContext context, int index) {
+//                             return Column(
+//                               children: <Widget>[
+//                                 SizedBox(
+//                                   height: 130.0,
+//                                   width: 140.0,
+//                                   child: Image.asset(
+//                                     '',
+//                                     fit: BoxFit.fitHeight,
+//                                   ),
+//                                 ),
+//                                 Padding(padding: EdgeInsets.all(5.0)),
+//                                 Text(
+//                                   '..........',
+//                                   style: TextStyle(
+//                                     color: Colors.white.withOpacity(1.0),
+//                                     fontFamily: 'SpotifyFont',
+//                                     fontSize: 10.0,
+//                                   ),
+//                                 )
+//                               ],
+//                             );
+//                           },
+//                         ),

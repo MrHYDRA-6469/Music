@@ -83,7 +83,7 @@ class Item {
   ExternalUrls externalUrls;
   String href;
   String id;
-  List<Image> images;
+  List<Imagess> images;
   String name;
   DateTime releaseDate;
   ReleaseDatePrecision releaseDatePrecision;
@@ -100,7 +100,8 @@ class Item {
         externalUrls: ExternalUrls.fromJson(json["external_urls"]),
         href: json["href"],
         id: json["id"],
-        images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
+        images:
+            List<Imagess>.from(json["images"].map((x) => Imagess.fromJson(x))),
         name: json["name"],
         releaseDate: DateTime.parse(json["release_date"]),
         releaseDatePrecision:
@@ -190,8 +191,8 @@ enum ArtistType { ARTIST }
 
 final artistTypeValues = EnumValues({"artist": ArtistType.ARTIST});
 
-class Image {
-  Image({
+class Imagess {
+  Imagess({
     this.height,
     this.url,
     this.width,
@@ -201,7 +202,7 @@ class Image {
   String url;
   int width;
 
-  factory Image.fromJson(Map<String, dynamic> json) => Image(
+  factory Imagess.fromJson(Map<String, dynamic> json) => Imagess(
         height: json["height"],
         url: json["url"],
         width: json["width"],
