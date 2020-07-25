@@ -58,7 +58,7 @@ class _MainPageState extends State<MainPage> {
                     padding: EdgeInsets.all(45.0),
                   ),
                   Container(
-                    height: 250.0,
+                    height: 338.0,
                     child: Column(
                       children: <Widget>[
                         Text(
@@ -82,30 +82,66 @@ class _MainPageState extends State<MainPage> {
                                 //print('project snapshot data is: ${projectSnap.data}');
                                 return Container();
                               } else if (projectSnap.data != null) {
+                                print(projectSnap.data);
                                 return Container(
-                                  height: 200,
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 300,
                                   child: ListView.builder(
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: projectSnap
-                                        .data.albums.items[1].artists.length,
-                                    itemBuilder: (context, index) {
-                                      Albums project = projectSnap
-                                          .data.albums.items[1].artists[index];
-                                      return Column(
-                                        children: <Widget>[
-                                          Expanded(
-                                            child: Text(project.albums.items[1]
-                                                .artists[3].name),
-                                            // child: Image(
-                                            //     image: NetworkImage(project.albums
-                                            //         .items[6].images[2].url)),
-                                          )
-                                          // Widget to display the list of project
-                                        ],
-                                      );
-                                    },
-                                  ),
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount:
+                                          projectSnap.data.albums.items.length,
+                                      itemBuilder: (context, idx) {
+                                        return Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            Container(
+                                              height: 150,
+                                              width: 200,
+                                              child: Image.network(projectSnap
+                                                  .data
+                                                  .albums
+                                                  .items[idx]
+                                                  .images[1]
+                                                  .url),
+                                            ),
+                                            Container(
+                                              height: 150,
+                                              width: 200,
+                                              child: Builder(
+                                                builder: (context) {
+                                                  List<Artist> project =
+                                                      projectSnap.data.albums
+                                                          .items[idx].artists;
+                                                  List<Widget> widgets = [];
+                                                  for (int index = 0;
+                                                      index < project.length;
+                                                      index++) {
+                                                    print(index);
+
+                                                    widgets.add(Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Text(
+                                                        project[index].name,
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: TextStyle(
+                                                            fontSize: 16),
+                                                      ),
+                                                    ));
+                                                  }
+                                                  return Column(
+                                                    children: widgets,
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      }),
                                 );
                               } else {
                                 return CircularProgressIndicator(); // loading
@@ -134,9 +170,8 @@ class _MainPageState extends State<MainPage> {
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {
                                 return Expanded(
-                                  child: Image(
-                                      image: NetworkImage(snapshot
-                                          .data.albums.items[6].images[1].url)),
+                                  child: Image.network(snapshot
+                                      .data.albums.items[6].images[1].url),
                                 );
                               } else if (snapshot.hasError) {
                                 return Text("${snapshot.error}");
