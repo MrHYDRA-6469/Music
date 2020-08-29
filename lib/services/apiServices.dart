@@ -3,12 +3,38 @@ import 'dart:async';
 import 'package:music_for_everone/models/albums/albums.dart';
 import 'dart:io';
 import 'dart:convert';
-import 'package:music_for_everone/utilities/key.dart';
+
 // import 'package:oauth2/oauth2.dart';
 
 String url = 'https://api.spotify.com/v1/browse/new-releases';
 
+Future<String> getAuthToken() async {
+  // final String clientID = DotEnv().env['CLIENTID'];
+  // final String clientSecret = DotEnv().env['CLIENTSECRET'];
+  final String credentials = '' + ':' + '';
+  String base64encoded = base64Url.encode(utf8.encode(credentials));
+
+  var url = 'https://accounts.spotify.com/api/token';
+  var response = await http.post(
+    url,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Basic ' + base64encoded,
+    },
+    body: {'grant_type': 'client_credentials'},
+  );
+
+  Map<String, dynamic> tokenJSON = jsonDecode(response.body);
+  print(jsonDecode(response.body));
+  return tokenJSON['access_token'];
+}
+
 Future<Albums> fetchAlbum() async {
+  final String accode = await getAuthToken();
+  print('accode1');
+  print(accode);
+
+  print('accode2');
   Map<String, String> parameters = {
     'country': null,
     'limit': null,
@@ -16,8 +42,7 @@ Future<Albums> fetchAlbum() async {
   };
   Map<String, String> headers = {
     // HttpHeaders.contentTypeHeader: 'application/json',
-    HttpHeaders.authorizationHeader: 'Bearer ' +
-        "BQDHl0HXQEyUZfBsXcyP2yrKHrP9TJgIlpehobZiSHL14YSTIzyGblumvKb8bK7mrbs_-AIQUTBXtK2OhSukemAmU3VoJkqQYr-2-_fwbmyfh6eHvZRIJQy500PNgqpwpffZ648-8YmjbouEbr4aKWESEI25cQrDq_oUvTVUjXJnm3cACix8cAhSrz6UVt32FJKkWXGakZP7JjO-jxRkRGH813ixe9gwrpYyv5bzhL_wixEHaYQ5ZXRyEG-r__mchoTslfdHUSR9dCYPS0dXfBoCDZp5KFxH",
+    HttpHeaders.authorizationHeader: 'Bearer ' + accode
   };
   final response = await http.get(
     url,
